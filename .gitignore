@@ -1,3 +1,25 @@
 .DS_STORE
 .idea
 .vscode
+.bundle
+
+# Secrets
+.env.*
+rails_tutorial/config/master.key
+rails_tutorial/config/database.yml
+
+# Rails folders
+app/assets/builds/*
+rails_tutorial/storage/**/*
+rails_tutorial/tmp/**/*
+rails_tutorial/log/*
+rails_tutorial/public/assets/*
+rails_tutorial/vendor/*
+
+# Exceptions
+!.env.*.sample
+!log/*.keep
+!tmp/*.keep
+!storage/*.keep
+!tmp/pids/.keep
+!app/assets/builds/.keep
