@@ -147,14 +147,15 @@ puts result
 # (Ruby 2.7 experimental, later stabilized)
 #
 
-puts "\nExample 15"
+# puts "\nExample 15"
 
-values = [1, 2, 3, 4]
+# values = [1, 2, 3, 4]
 
-case values
-in [*, 3, *]
-  puts "Contains 3"
-end
+# case values
+# in [*before, 3, *after]
+#   p before
+#   p after
+# end
 
 # Ruby 2.7+ only
 def wrapper(...)
@@ -200,4 +201,35 @@ in [200, body]
   puts body
 in [404, _]
   puts "Not found"
+end
+
+
+# 3.x
+
+# Array destructuring
+
+case [1, 2, 3]
+in [a, b, c]
+  puts "#{a} #{b} #{c}"
+end
+
+# Hash destructuring
+
+case {name: "Amy", age: 42}
+in {name:, age:}
+  puts "#{name} #{age}"
+end
+
+# Type checking
+case value
+in Integer => n
+  puts "integer #{n}"
+in String => s
+  puts "string #{s}"
+end
+
+# Nested patterns 
+case response
+in {status: 200, body: {user: {name:}}}
+  puts name
 end
