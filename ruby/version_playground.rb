@@ -1,20 +1,20 @@
 puts "Ruby #{RUBY_VERSION}"
 puts "-" * 60 # visual separator
 
-#
-# Example 1: Keyword args forwarding (breaks in Ruby 3)
-#
+# #
+# # Example 1: Keyword args forwarding (breaks in Ruby 3)
+# #
 
 def greet(name:)
   puts "Hello #{name}"
 end
 
-def old_wrapper(*args)
-  greet(*args)
-end
+# def old_wrapper(*args)
+#   greet(*args)
+# end
 
-puts "\nExample 1"
-old_wrapper(name: "Amy")
+# puts "\nExample 1"
+greet(name: "Amy")
 
 
 #
