@@ -1,235 +1,35 @@
 puts "Ruby #{RUBY_VERSION}"
 puts "-" * 60 # visual separator
 
-# #
-# # Example 1: Keyword args forwarding (breaks in Ruby 3)
-# #
+# Get real examples from https://rubyreferences.github.io/rubychanges/3.0.html
 
-def greet(name:)
-  puts "Hello #{name}"
+# 1. Full separation of keyword arguments
+
+def old_style(name, options = {})
+  puts "#{name} was passed as a positional arg"
+  puts options
 end
 
-# def old_wrapper(*args)
-#   greet(*args)
-# end
-
-# puts "\nExample 1"
-greet(name: "Amy")
-
-
-#
-# Example 2: Correct keyword forwarding
-#
-
-def new_wrapper(*args, **kwargs)
-  greet(*args, **kwargs)
+def new_style(name, **options)
+   puts "#{name} was passed as a positional arg"
+   puts options
 end
 
-puts "\nExample 2"
-new_wrapper(name: "Amy")
-
-
-#
-# Example 3: Ruby 2.7 argument forwarding (...)
-#
-
-def forwarding_wrapper(...)
-  greet(...)
-end
-
-puts "\nExample 3"
-forwarding_wrapper(name: "Amy")
-
-
-#
-# Example 6: Numbered block params
-#
-
-puts "\nExample 6"
-
-p [1, 2, 3].map { _1 * 10 }
-
-
-#
-# Example 7: Beginless range
-#
-
-puts "\nExample 7"
-
-p (..5).include?(3)
-p (..5).include?(100)
-
-
-#
-# Example 8: Endless range
-#
-
-puts "\nExample 8"
-
-p (5..).include?(1000)
-
-
-#
-# Example 9: Filter with endless range
-#
-
-puts "\nExample 9"
-
-scores = [50, 75, 90, 100]
-p scores.select { _1 in 90.. }
-
-
-#
-# Example 10: Hash shorthand pattern matching
-#
-
-puts "\nExample 10"
-
-user = {
-  name: "Amy",
-  role: "admin"
-}
-
-case user
-in { role: "admin", name: }
-  puts "Admin: #{name}"
-end
-
-
-#
-# Example 11: Proc composition
-#
-
-puts "\nExample 11"
-
-double = -> x { x * 2 }
-plus_one = -> x { x + 1 }
-
-combined = double >> plus_one
-
-puts combined.call(10)
-
-
-#
-# Example 12: Enumerable#filter_map
-#
-
-puts "\nExample 12"
-
-p [1, 2, 3, 4].filter_map { |n| n * 10 if n.even? }
-
-
-#
-# Example 13: then()
-#
-
-puts "\nExample 13"
-
-result =
-  "amy"
-    .then(&:upcase)
-    .then { "#{_1}!" }
-
-puts result
-
-
-#
-# Example 14: Endless method definition
-# (Ruby 3+)
-#
-
-# def active? = true
-# puts active?
-
-
-#
-# Example 15: Find pattern
-# (Ruby 2.7 experimental, later stabilized)
-#
-
-# puts "\nExample 15"
-
-# values = [1, 2, 3, 4]
-
-# case values
-# in [*before, 3, *after]
-#   p before
-#   p after
-# end
-
-# Ruby 2.7+ only
-def wrapper(...)
-  target(...)
-end
-
-# Ruby 2.7+ only
-case { name: "Amy", age: 42 }
-in { name:, age: }
-  puts "#{name} is #{age}"
-end
-
-# Ruby 2.7+ only
-[1, 2, 3].map { _1 * 10 }
-
-# Ruby 2.7+ only
-p [1, nil, 2, false, 3].filter_map { |x| x * 2 if x }
-
-#
-# Example 4: Pattern matching
-#
-
-puts "\nExample 4"
-
-data = { name: "Amy", age: 42 }
-
-case data
-in { name:, age: }
-  puts "#{name} is #{age}"
-end
-
-
-#
-# Example 5: Array pattern matching
-#
-
-puts "\nExample 5"
-
-response = [200, "OK"]
-
-case response
-in [200, body]
-  puts body
-in [404, _]
-  puts "Not found"
-end
-
-
-# 3.x
-
-# Array destructuring
-
-case [1, 2, 3]
-in [a, b, c]
-  puts "#{a} #{b} #{c}"
-end
-
-# Hash destructuring
-
-case {name: "Amy", age: 42}
-in {name:, age:}
-  puts "#{name} #{age}"
-end
-
-# Type checking
-case value
-in Integer => n
-  puts "integer #{n}"
-in String => s
-  puts "string #{s}"
-end
-
-# Nested patterns 
-case response
-in {status: 200, body: {user: {name:}}}
-  puts name
-end
+# Throws in 'new_style': wrong number of arguments (given 2, expected 1) (ArgumentError)
+# new_style('John', {age: 10})
+
+# Converting to kwargs with ** is mandatory
+new_style('John', **{age: 10})
+
+# Ruby 2.6: works
+# Ruby 2.7: warns: Using the last argument as keyword parameters is deprecated; maybe ** should be added to the call
+# Ruby 3.0: ArgumentError (wrong number of arguments (given 2, expected 1))
+new_style('John', age: 10)
+# => works
+h = {age: 10}
+new_style('John', **h)
+# => works, ** is mandatory
+
+# The last hash argument still allowed to be passed without {}:
+old_style('John', age: 10)
+# => works
