@@ -19,19 +19,19 @@ end
 # new_style('John', {age: 10})
 
 # Converting to kwargs with ** is mandatory
-new_style('John', **{age: 10})
+# new_style('John', **{age: 10})
 
-# Ruby 2.6: works
-# Ruby 2.7: warns: Using the last argument as keyword parameters is deprecated; maybe ** should be added to the call
-# Ruby 3.0: ArgumentError (wrong number of arguments (given 2, expected 1))
-new_style('John', age: 10)
-# => works
-h = {age: 10}
-new_style('John', **h)
-# => works, ** is mandatory
+# # Ruby 2.6: works
+# # Ruby 2.7: warns: Using the last argument as keyword parameters is deprecated; maybe ** should be added to the call
+# # Ruby 3.0: ArgumentError (wrong number of arguments (given 2, expected 1))
+# new_style('John', age: 10)
+# # => works
+# h = {age: 10}
+# new_style('John', **h)
+# # => works, ** is mandatory
 
-# The last hash argument still allowed to be passed without {}:
-old_style('John', age: 10)
+# # The last hash argument still allowed to be passed without {}:
+# old_style('John', age: 10)
 # => works
 
 
@@ -146,3 +146,46 @@ x = 1 + sin y
           ^ syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('
 =end
 
+# Exercise 1: make this Ruby 3-compatible
+
+def greet(name:)
+  puts "Hello #{name}"
+end
+
+params = { name: "Amy" }
+
+greet(params)
+
+
+# Exercise 2: make this Ruby 3-compatible
+
+def save_user(attributes, validate: true)
+  p attributes
+  p validate
+end
+
+save_user(name: "Amy")
+
+# Exercise 3: make this wrapper Ruby 3-compatible
+
+def target(name:)
+  puts name
+end
+
+def wrapper(*args, &block)
+  target(*args, &block)
+end
+
+wrapper(name: "Amy")
+
+# Exercise 4: rewrite using argument forwarding
+
+def target(name:, greeting: "Hello")
+  puts "#{greeting} #{name}"
+end
+
+def wrapper(*args, **kwargs, &block)
+  target(*args, **kwargs, &block)
+end
+
+wrapper(name: "Amy")
