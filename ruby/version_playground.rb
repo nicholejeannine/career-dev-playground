@@ -208,37 +208,76 @@ def app_name
   "Job Tracker"
 end
 
-# 2
-def square(x)
-  x ** 2
-end
+# Both of these work to define the method, but the first is more idiomatic Ruby if no args
+# def app_name = puts "Job Tracker"
+# def app_name() = puts "Job Tracker"
 
-# 3
-def full_name(first, last)
-  "#{first} #{last}"
-end
+# Likewies, both of these work to call the method, but the first is more idiomatic Ruby if no args
+app_name
+# app_name()
+
+# 2
+# def square(x)
+#   x ** 2
+# end
+
+def square(x) = x ** 2
+
+puts square(4)
+
+# # 3
+# def full_name(first, last)
+#   "#{first} #{last}"
+# end
+
+def full_name(first, last) = puts "#{first} #{last}"
+
+full_name("Amy", "Doe")
 
 # 4
 def adult?(age)
   age >= 18
 end
 
-# 5
-def display_name(user)
-  user[:nickname] || user[:name] || "Anonymous"
-end
+
+# Parens arouund the argument are required, but around the expression (e.g,. age >= 18) parens are optional
+# Ruby prefers no parens because it's already a predicate method as indicated by `?` so parens `()` to viually
+# indicate 'returns a boolean' are not necessary
+def adult?(age) = age >= 18
+
+puts adult?(18)
+
+# # 5
+# def display_name(user)
+#   user[:nickname] || user[:name] || "Anonymous"
+# end
+
+def display_name(user) = user[:nickname] || user[:name] || "Anonymous"
+
+puts display_name({noname: "Bob"}) # Prints "Anonymous"
 
 # 6
-def total_price(price, quantity, tax_rate: 0.0)
-  price * quantity * (1 + tax_rate)
-end
+# def total_price(price, quantity, tax_rate: 0.0)
+#   price * quantity * (1 + tax_rate)
+# end
+
+def total_price(price, quantity, tax_rate: 0.0) = price * quantity * (1 + tax_rate)
+
+puts total_price(100, 3)
 
 # 7
-def active_admin?(user)
-  user[:active] && user[:role] == "admin"
-end
+# def active_admin?(user)
+#   user[:active] && user[:role] == "admin"
+# end
+
+def active_admin?(user) =   user[:active] && user[:role] == "admin"
+
+puts active_admin?({"name": "Bob", "active": true, "role": "admin"})
 
 # 8
-def normalized_tags(tags)
-  tags.map(&:strip).reject(&:empty?).map(&:downcase).uniq.sort
-end
+# def normalized_tags(tags)
+#   tags.map(&:strip).reject(&:empty?).map(&:downcase).uniq.sort
+# end
+
+def normalized_tags(tags) =  tags.map(&:strip).reject(&:empty?).map(&:downcase).uniq.sort
+
