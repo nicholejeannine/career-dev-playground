@@ -178,8 +178,9 @@ def target(name:)
   puts name
 end
 
-def wrapper(*args, &block)
-  target(*args, &block)
+def wrapper(*args, **kwargs, &block)
+  target(*args, **kwargs, &block)
+  puts "Called wrapper successfully"
 end
 
 wrapper(name: "Amy") # Fails in Ruby 3.0 :in 'target': wrong number of arguments (given 1, expected 0; required keyword: name) (ArgumentError)
@@ -191,8 +192,8 @@ def target(name:, greeting: "Hello")
   puts "#{greeting} #{name}"
 end
 
-def wrapper(*args, **kwargs, &block)
-  target(*args, **kwargs, &block)
+def wrapper(...)
+  target(...)
 end
 
 wrapper(name: "Amy")
