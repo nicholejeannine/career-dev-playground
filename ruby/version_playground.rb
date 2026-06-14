@@ -154,7 +154,9 @@ end
 
 params = { name: "Amy" }
 
-greet(params)
+# greet(params) # fails in Ruby 3 wrong number of arguments (given 1, expected 0; required keyword: name) (ArgumentError)
+# Fix: add `**` double splat operator to splat hash out into keyword args
+greet(**params)
 
 
 # Exercise 2: make this Ruby 3-compatible
@@ -164,7 +166,11 @@ def save_user(attributes, validate: true)
   p validate
 end
 
-save_user(name: "Amy")
+# save_user(name: "Amy") # fails in Ruby 3 wrong number of arguments (given 0, expected 1) (ArgumentError)
+# Error seems weird at first - we gave it one argument! But it's expecting a positional argument, not a named arg
+# So fix is to force it to recognize the positional argument. We do this by explicitly passing a hash as the first 
+# positional arg.
+save_user({ name: "Amy" })
 
 # Exercise 3: make this wrapper Ruby 3-compatible
 
@@ -176,7 +182,8 @@ def wrapper(*args, &block)
   target(*args, &block)
 end
 
-wrapper(name: "Amy")
+wrapper(name: "Amy") # Fails in Ruby 3.0 :in 'target': wrong number of arguments (given 1, expected 0; required keyword: name) (ArgumentError)
+
 
 # Exercise 4: rewrite using argument forwarding
 
