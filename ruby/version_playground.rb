@@ -197,3 +197,48 @@ def wrapper(...)
 end
 
 wrapper(name: "Amy")
+
+
+
+# Back to endlesa method syntax
+# Here are some examples of cdoe written in Ruby 2
+
+# 1
+def app_name
+  "Job Tracker"
+end
+
+# 2
+def square(x)
+  x ** 2
+end
+
+# 3
+def full_name(first, last)
+  "#{first} #{last}"
+end
+
+# 4
+def adult?(age)
+  age >= 18
+end
+
+# 5
+def display_name(user)
+  user[:nickname] || user[:name] || "Anonymous"
+end
+
+# 6
+def total_price(price, quantity, tax_rate: 0.0)
+  price * quantity * (1 + tax_rate)
+end
+
+# 7
+def active_admin?(user)
+  user[:active] && user[:role] == "admin"
+end
+
+# 8
+def normalized_tags(tags)
+  tags.map(&:strip).reject(&:empty?).map(&:downcase).uniq.sort
+end
