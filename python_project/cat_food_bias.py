@@ -21,11 +21,26 @@ data = [
 
 # print(data[1])
 
-flavors = ["beef", "chicken", "fish", "turkey"]
-for flavor in flavors:
-  scores = [d["score"] for d in data if d["flavor"] == flavor]
-  if scores:
-    avg = statistics.mean(scores)
-    print(f"{flavor}: avg score {avg:.2f} (n={len(scores)})")
-  else:
-    print(f"{flavor}: no data")
+# flavors = ["beef", "chicken", "fish", "turkey"]
+# for flavor in flavors:
+#   scores = [d["score"] for d in data if d["flavor"] == flavor]
+#   if scores:
+#     median = statistics.median(scores)
+#     print(f"{flavor}: median score {median:.2f} (n={len(scores)})")
+#   else:
+#     print(f"{flavor}: no data")
+
+def median_scores_by(data, field):
+  values = set(d[field] for d in data)
+  for value in values:
+    scores = [d["score"] for d in data if d[field] == value]
+    if scores:
+      med = statistics.median(scores)
+      print(f"{value}: median score {med} (n={len(scores)})")
+    else:
+      print(f"{value}: no data")
+
+print("--- By flavor ---")
+median_scores_by(data, "flavor")
+print("--- By Meal ---")
+median_scores_by(data, "meal")
