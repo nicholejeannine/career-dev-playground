@@ -20,3 +20,11 @@ value = None
 
 print(value) # Output: None
 
+# ranges - use range() function. Note - range starts at 0 if beginning not specified
+# for i in range(5):
+    # print(i) # prints 0 through 4
+
+for i in range(1, 5): # the given endpoint is STILL not part of the sequenece
+    print(i) # Prints 1 through 4
+for i in range(0, 100, 9): # optional step param
+    print(i)
